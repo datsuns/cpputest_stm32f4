@@ -10,7 +10,7 @@ endif
 
 # C specific options here (added to USE_OPT).
 ifeq ($(USE_COPT),)
-  USE_COPT = 
+  USE_COPT =
 endif
 
 # C++ specific options here (added to USE_OPT).
@@ -72,6 +72,9 @@ include $(CHIBIOS)/os/ports/GCC/ARMCMx/STM32F4xx/port.mk
 include $(CHIBIOS)/os/kernel/kernel.mk
 include $(CHIBIOS)/test/test.mk
 
+# path to CppUTest
+CPPUTEST = ../../../../cpputest
+
 # Define linker script file here
 LDSCRIPT= $(PORTLD)/STM32F407xG.ld
 #LDSCRIPT= $(PORTLD)/STM32F407xG_CCM.ld
@@ -90,7 +93,39 @@ CSRC = $(PORTSRC) \
 
 # C++ sources that can be compiled in ARM or THUMB mode depending on the global
 # setting.
-CPPSRC =
+CPPSRC = $(CPPUTEST)/src/CppUTest/CommandLineArguments.cpp \
+         $(CPPUTEST)/src/CppUTest/CommandLineTestRunner.cpp \
+         $(CPPUTEST)/src/CppUTest/JUnitTestOutput.cpp \
+         $(CPPUTEST)/src/CppUTest/MemoryLeakDetector.cpp \
+         $(CPPUTEST)/src/CppUTest/MemoryLeakWarningPlugin.cpp \
+         $(CPPUTEST)/src/CppUTest/SimpleString.cpp \
+         $(CPPUTEST)/src/CppUTest/TestFailure.cpp \
+         $(CPPUTEST)/src/CppUTest/TestFilter.cpp \
+         $(CPPUTEST)/src/CppUTest/TestHarness_c.cpp \
+         $(CPPUTEST)/src/CppUTest/TestMemoryAllocator.cpp \
+         $(CPPUTEST)/src/CppUTest/TestOutput.cpp \
+         $(CPPUTEST)/src/CppUTest/TestPlugin.cpp \
+         $(CPPUTEST)/src/CppUTest/TestRegistry.cpp \
+         $(CPPUTEST)/src/CppUTest/TestResult.cpp \
+         $(CPPUTEST)/src/CppUTest/UnitTestHarness.dsp \
+         $(CPPUTEST)/src/CppUTest/Utest.cpp \
+         $(CPPUTEST)/src/CppUTestExt \
+         $(CPPUTEST)/src/CppUTestExt/CodeMemoryReportFormatter.cpp \
+         $(CPPUTEST)/src/CppUTestExt/GTestConvertor.cpp \
+         $(CPPUTEST)/src/CppUTestExt/MemoryReportAllocator.cpp \
+         $(CPPUTEST)/src/CppUTestExt/MemoryReportFormatter.cpp \
+         $(CPPUTEST)/src/CppUTestExt/MemoryReporterPlugin.cpp \
+         $(CPPUTEST)/src/CppUTestExt/MockActualFunctionCall.cpp \
+         $(CPPUTEST)/src/CppUTestExt/MockExpectedFunctionCall.cpp \
+         $(CPPUTEST)/src/CppUTestExt/MockExpectedFunctionsList.cpp \
+         $(CPPUTEST)/src/CppUTestExt/MockFailure.cpp \
+         $(CPPUTEST)/src/CppUTestExt/MockFunctionCall.cpp \
+         $(CPPUTEST)/src/CppUTestExt/MockNamedValue.cpp \
+         $(CPPUTEST)/src/CppUTestExt/MockSupport.cpp \
+         $(CPPUTEST)/src/CppUTestExt/MockSupportPlugin.cpp \
+         $(CPPUTEST)/src/CppUTestExt/MockSupport_c.cpp \
+         $(CPPUTEST)/src/CppUTestExt/OrderedTest.cpp \
+         $(CPPUTEST)/src/Platforms/GccNoStdC/UtestPlatform.cpp
 
 # C sources to be compiled in ARM mode regardless of the global setting.
 # NOTE: Mixing ARM and THUMB mode enables the -mthumb-interwork compiler
