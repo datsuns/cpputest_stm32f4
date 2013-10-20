@@ -165,10 +165,15 @@ static msg_t Thread1(void *arg) {
   }
 }
 
+//#include "CppUTest/CommandLineTestRunner.h"
+//#include "CppUTest/TestPlugin.h"
+//#include "CppUTest/TestRegistry.h"
+#include "my.h"
 /*
  * Application entry point.
  */
 int main(void) {
+
 
   /*
    * System initializations.
@@ -239,6 +244,7 @@ int main(void) {
    * pressed the test procedure is launched with output on the serial
    * driver 2.
    */
+  dummy_func();
   while (TRUE) {
     if (palReadPad(GPIOA, GPIOA_BUTTON))
       TestThread(&SD2);

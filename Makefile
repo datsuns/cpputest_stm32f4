@@ -89,11 +89,33 @@ CSRC = $(PORTSRC) \
        $(BOARDSRC) \
        $(CHIBIOS)/os/various/devices_lib/accel/lis302dl.c \
        $(CHIBIOS)/os/various/chprintf.c \
-       main.c
+			 main.c
 
 # C++ sources that can be compiled in ARM or THUMB mode depending on the global
 # setting.
-CPPSRC = $(CPPUTEST)/src/CppUTest/CommandLineArguments.cpp \
+CPPSRC = my.cpp
+
+# C sources to be compiled in ARM mode regardless of the global setting.
+# NOTE: Mixing ARM and THUMB mode enables the -mthumb-interwork compiler
+#       option that results in lower performance and larger code size.
+ACSRC =
+
+# C++ sources to be compiled in ARM mode regardless of the global setting.
+# NOTE: Mixing ARM and THUMB mode enables the -mthumb-interwork compiler
+#       option that results in lower performance and larger code size.
+ACPPSRC =
+
+
+# C sources to be compiled in THUMB mode regardless of the global setting.
+# NOTE: Mixing ARM and THUMB mode enables the -mthumb-interwork compiler
+#       option that results in lower performance and larger code size.
+TCSRC =
+
+# C sources to be compiled in THUMB mode regardless of the global setting.
+# NOTE: Mixing ARM and THUMB mode enables the -mthumb-interwork compiler
+#       option that results in lower performance and larger code size.
+TCPPSRC =  \
+         $(CPPUTEST)/src/CppUTest/CommandLineArguments.cpp \
          $(CPPUTEST)/src/CppUTest/CommandLineTestRunner.cpp \
          $(CPPUTEST)/src/CppUTest/JUnitTestOutput.cpp \
          $(CPPUTEST)/src/CppUTest/MemoryLeakDetector.cpp \
@@ -107,45 +129,24 @@ CPPSRC = $(CPPUTEST)/src/CppUTest/CommandLineArguments.cpp \
          $(CPPUTEST)/src/CppUTest/TestPlugin.cpp \
          $(CPPUTEST)/src/CppUTest/TestRegistry.cpp \
          $(CPPUTEST)/src/CppUTest/TestResult.cpp \
-         $(CPPUTEST)/src/CppUTest/UnitTestHarness.dsp \
          $(CPPUTEST)/src/CppUTest/Utest.cpp \
-         $(CPPUTEST)/src/CppUTestExt \
-         $(CPPUTEST)/src/CppUTestExt/CodeMemoryReportFormatter.cpp \
-         $(CPPUTEST)/src/CppUTestExt/GTestConvertor.cpp \
-         $(CPPUTEST)/src/CppUTestExt/MemoryReportAllocator.cpp \
-         $(CPPUTEST)/src/CppUTestExt/MemoryReportFormatter.cpp \
-         $(CPPUTEST)/src/CppUTestExt/MemoryReporterPlugin.cpp \
-         $(CPPUTEST)/src/CppUTestExt/MockActualFunctionCall.cpp \
-         $(CPPUTEST)/src/CppUTestExt/MockExpectedFunctionCall.cpp \
-         $(CPPUTEST)/src/CppUTestExt/MockExpectedFunctionsList.cpp \
-         $(CPPUTEST)/src/CppUTestExt/MockFailure.cpp \
-         $(CPPUTEST)/src/CppUTestExt/MockFunctionCall.cpp \
-         $(CPPUTEST)/src/CppUTestExt/MockNamedValue.cpp \
-         $(CPPUTEST)/src/CppUTestExt/MockSupport.cpp \
-         $(CPPUTEST)/src/CppUTestExt/MockSupportPlugin.cpp \
-         $(CPPUTEST)/src/CppUTestExt/MockSupport_c.cpp \
-         $(CPPUTEST)/src/CppUTestExt/OrderedTest.cpp \
-         $(CPPUTEST)/src/Platforms/GccNoStdC/UtestPlatform.cpp
+         $(CPPUTEST)/src/Platforms/GccNoStdC/UtestPlatform.cpp \
 
-# C sources to be compiled in ARM mode regardless of the global setting.
-# NOTE: Mixing ARM and THUMB mode enables the -mthumb-interwork compiler
-#       option that results in lower performance and larger code size.
-ACSRC =
-
-# C++ sources to be compiled in ARM mode regardless of the global setting.
-# NOTE: Mixing ARM and THUMB mode enables the -mthumb-interwork compiler
-#       option that results in lower performance and larger code size.
-ACPPSRC =
-
-# C sources to be compiled in THUMB mode regardless of the global setting.
-# NOTE: Mixing ARM and THUMB mode enables the -mthumb-interwork compiler
-#       option that results in lower performance and larger code size.
-TCSRC =
-
-# C sources to be compiled in THUMB mode regardless of the global setting.
-# NOTE: Mixing ARM and THUMB mode enables the -mthumb-interwork compiler
-#       option that results in lower performance and larger code size.
-TCPPSRC =
+    #   $(CPPUTEST)/src/CppUTestExt/CodeMemoryReportFormatter.cpp \
+    #   $(CPPUTEST)/src/CppUTestExt/GTestConvertor.cpp \
+    #   $(CPPUTEST)/src/CppUTestExt/MemoryReportAllocator.cpp \
+    #   $(CPPUTEST)/src/CppUTestExt/MemoryReportFormatter.cpp \
+    #   $(CPPUTEST)/src/CppUTestExt/MemoryReporterPlugin.cpp \
+    #   $(CPPUTEST)/src/CppUTestExt/MockActualFunctionCall.cpp \
+    #   $(CPPUTEST)/src/CppUTestExt/MockExpectedFunctionCall.cpp \
+    #   $(CPPUTEST)/src/CppUTestExt/MockExpectedFunctionsList.cpp \
+    #   $(CPPUTEST)/src/CppUTestExt/MockFailure.cpp \
+    #   $(CPPUTEST)/src/CppUTestExt/MockFunctionCall.cpp \
+    #   $(CPPUTEST)/src/CppUTestExt/MockNamedValue.cpp \
+    #   $(CPPUTEST)/src/CppUTestExt/MockSupport.cpp \
+    #   $(CPPUTEST)/src/CppUTestExt/MockSupportPlugin.cpp \
+    #   $(CPPUTEST)/src/CppUTestExt/MockSupport_c.cpp \
+    #   $(CPPUTEST)/src/CppUTestExt/OrderedTest.cpp \
 
 # List ASM source files here
 ASMSRC = $(PORTASM)
@@ -201,13 +202,13 @@ CPPWARN = -Wall -Wextra
 #
 
 # List all default C defines here, like -D_DEBUG=1
-DDEFS =
+DDEFS = -DCPPUTEST_USE_STD_CPP_LIB=0
 
 # List all default ASM defines here, like -D_DEBUG=1
-DADEFS =
+DADEFS = -DCPPUTEST_USE_STD_CPP_LIB=0
 
 # List all default directories to look for include files here
-DINCDIR =
+DINCDIR = $(CPPUTEST)/include
 
 # List the default directory to look for the libraries here
 DLIBDIR =
